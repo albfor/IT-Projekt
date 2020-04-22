@@ -4,7 +4,7 @@ func _physics_process(delta):
 	var direction: = get_direction()
 	velocity = calculate_move_velocity(velocity, direction, speed)
 	velocity = move_and_slide(velocity, FLOOR_NORMAL)
-
+	
 # Calculates the movement/fall speed
 func calculate_move_velocity(
 		linear_velocity: Vector2,
@@ -32,7 +32,6 @@ func get_direction() -> Vector2:
 
 # Show label saying "press e to enter" when on a PC
 func _on_Area2D_area_entered(area):
-	print(area.get_name())
 	$Label.show()
 
 func _on_Area2D_area_exited(area):
