@@ -1,10 +1,14 @@
 extends Actor
 
 func _physics_process(delta):
-	var direction: = get_direction()
-	velocity = calculate_move_velocity(velocity, direction, speed)
-	velocity = move_and_slide(velocity, FLOOR_NORMAL)
-	
+	#Needed for online
+	if is_network_master():
+		var direction: = get_direction()
+		velocity = calculate_move_velocity(velocity, direction, speed)
+		velocity = move_and_slide(velocity, FLOOR_NORMAL)
+	if not is_network_master():
+		player_pos = position # To avoid jitter
+		
 # Calculates the movement/fall speed
 func calculate_move_velocity(
 		linear_velocity: Vector2,
@@ -38,3 +42,6 @@ func _on_Area2D_area_entered(area):
 
 func _on_Area2D_area_exited(area):
 	$Label.hide()
+
+func _ready():
+	player_pos = position

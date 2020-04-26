@@ -4,7 +4,7 @@ extends Node
 const DEFAULT_PORT = 10567
 
 # Max number of players.
-const MAX_PEERS = 12
+const MAX_PLAYERS = 5
 
 # Default name for player
 var player_name = "Player 1"
@@ -28,7 +28,7 @@ func _player_connected(id):
 
 # Callback from SceneTree.
 func _player_disconnected(id):
-	if has_node("/root/World"): # Game is in progress.
+	if has_node("res://src/scenes/Level.tscn"): # Game is in progress.
 		if get_tree().is_network_server():
 			emit_signal("game_error", "Player " + players[id] + " disconnected")
 			end_game()
@@ -121,7 +121,7 @@ remote func ready_to_start(id):
 func host_game(new_player_name):
 	player_name = new_player_name
 	var host = NetworkedMultiplayerENet.new()
-	host.create_server(DEFAULT_PORT, MAX_PEERS)
+	host.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(host)
 
 

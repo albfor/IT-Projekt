@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Actor
 
+puppet var player_pos = Vector2()
+
 const FLOOR_NORMAL: = Vector2.UP
 
 export var gravity: = 4000.0 
