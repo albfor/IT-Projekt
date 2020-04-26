@@ -1,49 +1,55 @@
-extends Actor
+extends KinematicBody2D
 
-puppet var player_pos = Vector2()
+const FLOOR_NORMAL: = Vector2.UP
 
-func _physics_process(delta):
-	#Needed for online
+export var gravity: = 4000.0 
+export var speed: = Vector2(300.0, 1000.0) # how quickly the actor is allowed to move
+var velocity: = Vector2.ZERO # how quickly the actor moves
+
+
+const MOTION_SPEED = 90.0
+
+puppet var puppet_pos = Vector2()
+puppet var puppet_motion = Vector2()
+
+func _physics_process(_delta):
+	var motion = Vector2()
+
 	if is_network_master():
-		var direction: = get_direction()
-		velocity = calculate_move_velocity(velocity, direction, speed)
-		velocity = move_and_slide(velocity, FLOOR_NORMAL)
+		if Input.is_action_pressed("move_left"):
+			motion += Vector2(-1, 0)
+		if Input.is_action_pressed("move_right"):
+			motion += Vector2(1, 0)
+		if Input.is_action_pressed("move_up"):
+			motion += Vector2(0, -1)
+		if Input.is_action_pressed("move_down"):
+			motion += Vector2(0, 1)
+
+
+		rset("puppet_motion", motion)
+		rset("puppet_pos", position)
+	else:
+		position = puppet_pos
+		motion = puppet_motion
+
+	var new_anim = "standing"
+	if motion.y < 0:
+		new_anim = "walk_up"
+	elif motion.y > 0:
+		new_anim = "walk_down"
+	elif motion.x < 0:
+		new_anim = "walk_left"
+	elif motion.x > 0:
+		new_anim = "walk_right"
+
+	# FIXME: Use move_and_slide
+	move_and_slide(motion * MOTION_SPEED)
 	if not is_network_master():
-		player_pos = position # To avoid jitter
-		
-# Calculates the movement/fall speed
-func calculate_move_velocity(
-		linear_velocity: Vector2,
-		direction: Vector2, 
-		speed: Vector2
-	) -> Vector2:
-	var new_velocity: = linear_velocity
-	new_velocity.x = speed.x * direction.x
-	new_velocity.y += gravity * get_physics_process_delta_time()
-	# If jumping overrule y axis velocity
-	if direction.y == -1.0:
-		new_velocity.y = speed.y * direction.y
-	return new_velocity
+		puppet_pos = position # To avoid jitter
 
-# Returns the direction of user input for the player movement
-# Key bindings for move_right, move_left and jump can be changed 
-# in Project -> Project settings -> Input Map
-func get_direction() -> Vector2:
-	return Vector2(
-		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-		-1.0 if Input.is_action_just_pressed("jump") and is_on_floor() else 1.0
-	)
 
-#Sets the name of the player
 func set_player_name(new_name):
 	get_node("NameLabel").set_text(new_name)
 
-# Show label saying "press e to enter" when on a PC
-func _on_Area2D_area_entered(area):
-	$Label.show()
-
-func _on_Area2D_area_exited(area):
-	$Label.hide()
-
 func _ready():
-	player_pos = position
+	puppet_pos = position

@@ -72,11 +72,11 @@ func unregister_player(id):
 remote func pre_start_game(spawn_points):
 	# Change scene.
 	var world = load("res://src/scenes/Level.tscn").instance()
-	get_node("/root").add_child(world)
+	get_tree().get_root().add_child(world)
 
 	get_tree().get_root().get_node("Main").hide()
 
-	var player_scene = load("res://src/resources/objects/player/Player.tscn")
+	var player_scene = preload("res://src/resources/objects/player/Player.tscn")
 
 	for p_id in spawn_points:
 		var spawn_pos = world.get_node("SpawnPoints/" + str(spawn_points[p_id])).position
@@ -98,7 +98,7 @@ remote func pre_start_game(spawn_points):
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start.
 		rpc_id(1, "ready_to_start", get_tree().get_network_unique_id())
-	elif players.size() == 0:
+	elif players.size() != 0:
 		post_start_game()
 
 
