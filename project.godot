@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Actor",
 "language": "GDScript",
-"path": "res://src/Actor.gd"
+"path": "res://src/scripts/Actor.gd"
 } ]
 _global_script_class_icons={
 "Actor": ""
@@ -21,7 +21,13 @@ _global_script_class_icons={
 [application]
 
 config/name="It-Projekt"
-config/icon="res://icon.png"
+run/main_scene="res://src/scenes/Main.tscn"
+config/icon="res://src/resources/images/icon.png"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
 
 [input]
 
@@ -57,4 +63,5 @@ enter_computer={
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
-environment/default_environment="res://default_env.tres"
+environment/default_clear_color=Color( 0.231373, 0.227451, 0.258824, 1 )
+environment/default_environment="res://src/default_env.tres"

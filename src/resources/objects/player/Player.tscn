@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://src/Player.gd" type="Script" id=2]
+[ext_resource path="res://src/resources/images/icon.png" type="Texture" id=1]
+[ext_resource path="res://src/resources/objects/player/scripts/Player.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 28.6135, 29.718 )
