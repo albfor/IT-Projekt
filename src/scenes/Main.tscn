@@ -3,12 +3,12 @@
 [ext_resource path="res://src/resources/images/Demo_logo.png" type="Texture" id=1]
 [ext_resource path="res://src/resources/objects/buttons/OptionsButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/resources/objects/buttons/HostGameButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/resources/images/icon.png" type="Texture" id=4]
 [ext_resource path="res://src/resources/fonts/montserrat_24.tres" type="DynamicFont" id=5]
 [ext_resource path="res://src/resources/objects/buttons/JoinGameButton.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/scripts/Main.gd" type="Script" id=7]
+[ext_resource path="res://src/resources/objects/buttons/StartGameButton.tscn" type="PackedScene" id=8]
 
-[node name="Control" type="Control"]
+[node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 7 )
@@ -34,53 +34,126 @@ stretch_mode = 4
 [node name="CenterRow" type="HBoxContainer" parent="Menu"]
 margin_top = 68.0
 margin_right = 1040.0
-margin_bottom = 312.0
+margin_bottom = 288.0
 size_flags_vertical = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Menu/CenterRow"]
-margin_right = 518.0
-margin_bottom = 244.0
+margin_right = 1040.0
+margin_bottom = 220.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 20
 alignment = 1
 
-[node name="HostGameButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 3 )]
-margin_top = 12.0
-margin_right = 518.0
-margin_bottom = 72.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/CenterRow/Buttons"]
+margin_right = 1040.0
+margin_bottom = 60.0
 
-[node name="JoinGameButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
-margin_top = 92.0
-margin_right = 518.0
-margin_bottom = 152.0
+[node name="HostGameButton" parent="Menu/CenterRow/Buttons/HBoxContainer" instance=ExtResource( 3 )]
+margin_right = 360.0
+margin_bottom = 60.0
+
+[node name="Name" type="LineEdit" parent="Menu/CenterRow/Buttons/HBoxContainer"]
+margin_left = 364.0
+margin_right = 1040.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 5 )
+text = "Player 1"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Menu/CenterRow/Buttons"]
+margin_top = 80.0
+margin_right = 1040.0
+margin_bottom = 140.0
+
+[node name="JoinGameButton" parent="Menu/CenterRow/Buttons/HBoxContainer2" instance=ExtResource( 6 )]
+margin_right = 360.0
+margin_bottom = 60.0
+
+[node name="IP" type="LineEdit" parent="Menu/CenterRow/Buttons/HBoxContainer2"]
+margin_left = 364.0
+margin_right = 1040.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 5 )
+text = "127.0.0.1"
 
 [node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 2 )]
-margin_top = 172.0
-margin_right = 518.0
-margin_bottom = 232.0
+margin_top = 160.0
+margin_bottom = 220.0
 
-[node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
+[node name="Lobby" type="VBoxContainer" parent="Menu/CenterRow"]
+visible = false
 margin_left = 522.0
 margin_right = 1040.0
 margin_bottom = 244.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Players" type="TextureRect" parent="Menu/CenterRow/CenterContainer"]
-margin_left = 195.0
-margin_top = 58.0
-margin_right = 323.0
-margin_bottom = 186.0
-texture = ExtResource( 4 )
+[node name="CenterContainer" type="CenterContainer" parent="Menu"]
+margin_top = 292.0
+margin_right = 1040.0
+margin_bottom = 424.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ErrorLabel" type="Label" parent="Menu/CenterContainer"]
+margin_left = 520.0
+margin_top = 50.0
+margin_right = 520.0
+margin_bottom = 81.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
 
 [node name="VersionLabel" type="Label" parent="Menu"]
-margin_top = 316.0
+margin_top = 428.0
 margin_right = 1040.0
 margin_bottom = 560.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 5 )
 text = "Version 0.0.1
 DEMO"
-[connection signal="pressed" from="Menu/CenterRow/Buttons/HostGameButton" to="." method="_on_HostGameButton_pressed"]
-[connection signal="pressed" from="Menu/CenterRow/Buttons/JoinGameButton" to="." method="_on_JoinGameButton_pressed"]
+
+[node name="Lobby" type="VBoxContainer" parent="."]
+visible = false
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 1160.0
+margin_bottom = 640.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Lobby"]
+margin_right = 1040.0
+margin_bottom = 64.0
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="WaitingLabel" type="Label" parent="Lobby"]
+margin_top = 68.0
+margin_right = 1040.0
+margin_bottom = 99.0
+custom_fonts/font = ExtResource( 5 )
+text = "Waiting for players..."
+
+[node name="PlayerList" type="ItemList" parent="Lobby"]
+margin_top = 103.0
+margin_right = 1040.0
+margin_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StartGameButton" parent="Lobby" instance=ExtResource( 8 )]
+margin_top = 500.0
+margin_bottom = 560.0
+
+[node name="ErrorDialog" type="AcceptDialog" parent="."]
+margin_right = 83.0
+margin_bottom = 58.0
+[connection signal="pressed" from="Menu/CenterRow/Buttons/HBoxContainer/HostGameButton" to="." method="_on_HostGameButton_pressed"]
+[connection signal="pressed" from="Menu/CenterRow/Buttons/HBoxContainer2/JoinGameButton" to="." method="_on_JoinGameButton_pressed"]
+[connection signal="pressed" from="Lobby/StartGameButton" to="." method="_on_StartGameButton_pressed"]

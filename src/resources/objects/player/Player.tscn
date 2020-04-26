@@ -42,6 +42,15 @@ text = "Press \"E\" to Enter"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="NameLabel" type="Label" parent="."]
+margin_left = -20.566
+margin_top = -55.0639
+margin_right = 19.434
+margin_bottom = -41.0639
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

@@ -28,7 +28,9 @@ func get_direction() -> Vector2:
 		-1.0 if Input.is_action_just_pressed("jump") and is_on_floor() else 1.0
 	)
 
-
+#Sets the name of the player
+func set_player_name(new_name):
+	get_node("NameLabel").set_text(new_name)
 
 # Show label saying "press e to enter" when on a PC
 func _on_Area2D_area_entered(area):
