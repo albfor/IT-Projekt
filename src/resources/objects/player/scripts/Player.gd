@@ -57,3 +57,6 @@ func _on_Area2D_area_exited(area):
 
 func _ready():
 	player_pos = position
+	if is_network_master():
+		Camera2D.makecurrent()
+		
