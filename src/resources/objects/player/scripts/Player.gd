@@ -1,5 +1,7 @@
 extends Actor
 
+puppet var player_pos = Vector2()
+
 func _physics_process(delta):
 	#Needed for online
 	if is_network_master():
