@@ -3,18 +3,17 @@ extends Actor
 puppet var player_pos = Vector2()
 puppet var player_motion = Vector2()
 
-func _physics_process(delta):
-	var motion = Vector2()
+func _physics_process(_delta):
 	
 	#Needed for online
 	if is_network_master():
 		var direction: = get_direction()
 		velocity = calculate_move_velocity(velocity, direction, speed)
-		rset("puppet_motion", velocity)
-		rset("puppet_pos", position)
+		rset("player_motion", velocity)
+		rset("player_pos", position)
 	else:
 		position = player_pos
-		motion = player_motion
+		velocity = player_motion
 
 	velocity = move_and_slide(velocity, FLOOR_NORMAL)
 
