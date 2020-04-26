@@ -9,6 +9,7 @@ func _physics_process(_delta):
 	if is_network_master():
 		var direction: = get_direction()
 		velocity = calculate_move_velocity(velocity, direction, speed)
+		#Important for updating player movement for other clients
 		rset("player_motion", velocity)
 		rset("player_pos", position)
 	else:
