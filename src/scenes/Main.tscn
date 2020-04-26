@@ -6,11 +6,12 @@
 [ext_resource path="res://src/resources/images/icon.png" type="Texture" id=4]
 [ext_resource path="res://src/resources/fonts/montserrat_24.tres" type="DynamicFont" id=5]
 [ext_resource path="res://src/resources/objects/buttons/JoinGameButton.tscn" type="PackedScene" id=6]
-[ext_resource path="res://src/resources/objects/buttons/Scripts/host_game_button.gd" type="Script" id=7]
+[ext_resource path="res://src/scripts/Main.gd" type="Script" id=7]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -24,7 +25,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo" type="TextureRect" parent="Menu"]
+[node name="TextureRect" type="TextureRect" parent="Menu"]
 margin_right = 1040.0
 margin_bottom = 64.0
 texture = ExtResource( 1 )
@@ -48,7 +49,6 @@ alignment = 1
 margin_top = 12.0
 margin_right = 518.0
 margin_bottom = 72.0
-script = ExtResource( 7 )
 
 [node name="JoinGameButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
 margin_top = 92.0
@@ -82,4 +82,5 @@ size_flags_vertical = 3
 custom_fonts/font = ExtResource( 5 )
 text = "Version 0.0.1
 DEMO"
-[connection signal="pressed" from="Menu/CenterRow/Buttons/HostGameButton" to="Menu/CenterRow/Buttons/HostGameButton" method="_on_HostGameButton_pressed"]
+[connection signal="pressed" from="Menu/CenterRow/Buttons/HostGameButton" to="." method="_on_HostGameButton_pressed"]
+[connection signal="pressed" from="Menu/CenterRow/Buttons/JoinGameButton" to="." method="_on_JoinGameButton_pressed"]
