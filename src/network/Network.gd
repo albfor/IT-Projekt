@@ -1,16 +1,12 @@
-# Too access scripts without adding them 
-# to a node go to Project -> Project settings -> AutoLoad and add them
-# Det tog mig lång tid att hitta...
-
 extends Node
 
 # Default game port. Can be any number between 1024 and 49151.
 const DEFAULT_PORT = 10567
 
 # Max number of players.
-const MAX_PEERS = 10
+const MAX_PEERS = 12
 
-# Default player name
+# Default name for player
 var player_name = "Player 1"
 
 # Names for remote players in id:name format.
@@ -99,6 +95,13 @@ remote func pre_start_game(spawn_points):
 
 		world.get_node("Players").add_child(player)
 
+	if not get_tree().is_network_server():
+		# Tell server we are ready to start.
+		rpc_id(1, "ready_to_start", get_tree().get_network_unique_id())
+	elif players.size() == 0:
+		post_start_game()
+
+
 remote func post_start_game():
 	get_tree().set_pause(false) # Unpause and unleash the game!
 
@@ -155,9 +158,9 @@ func begin_game():
 
 
 func end_game():
-	if has_node("/root/World"): # Game is in progress.
+	if has_node("res://src/scenes/Level.tscn"): # Game is in progress.
 		# End it
-		get_node("/root/World").queue_free()
+		get_node("res://src/scenes/Level.tscn").queue_free()
 
 	emit_signal("game_ended")
 	players.clear()
