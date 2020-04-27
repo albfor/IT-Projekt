@@ -50,7 +50,8 @@ func set_player_name(new_name):
 
 # Show label saying "press e to enter" when on a PC
 func _on_Area2D_area_entered(area):
-	$Label.show()
+	if area.name == "Computer": 
+		$Label.show()
 
 func _on_Area2D_area_exited(area):
 	$Label.hide()
