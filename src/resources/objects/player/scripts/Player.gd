@@ -61,3 +61,6 @@ func _ready():
 	if is_network_master():
 		$Camera2D.current = true
 		
+
+func get_class():
+	return "Player"
