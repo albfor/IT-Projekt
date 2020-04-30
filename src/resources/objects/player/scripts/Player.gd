@@ -51,7 +51,7 @@ func set_player_name(new_name):
 
 # Show label saying "press e to enter" when on a PC
 func _on_Area2D_area_entered(area):
-	if area.name == "Computer": 
+	if area.is_in_group("computers"):
 		$Label.show()
 
 func _on_Area2D_area_exited(area):

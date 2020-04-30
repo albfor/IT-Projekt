@@ -13,6 +13,9 @@ func _physics_process(delta):
 				var players = get_tree().get_nodes_in_group("players")
 				for player in players:
 					player.show()
+				var computers = get_tree().get_nodes_in_group("computers")
+				for computer in computers: 
+					computer.get_node("Sprite").show()
 			else:
 				$Desktop.show()
 				$Desktop/Camera2D.make_current()
@@ -20,3 +23,9 @@ func _physics_process(delta):
 				var players = get_tree().get_nodes_in_group("players")
 				for player in players:
 					player.hide()
+				var computers = get_tree().get_nodes_in_group("computers")
+				for computer in computers: 
+					computer.get_node("Sprite").hide()
+
+func _ready():
+	add_to_group("computers")
