@@ -68,7 +68,6 @@ func unregister_player(id):
 	players.erase(id)
 	emit_signal("player_list_changed")
 
-
 remote func pre_start_game(spawn_points):
 	# Change scene.
 	var world = load("res://src/scenes/Level.tscn").instance()

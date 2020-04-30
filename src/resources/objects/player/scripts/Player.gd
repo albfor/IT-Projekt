@@ -2,9 +2,9 @@ extends Actor
 
 puppet var player_pos = Vector2()
 puppet var player_motion = Vector2()
+var movements_allowed = true;
 
 func _physics_process(_delta):
-	
 	#Needed for online
 	if is_network_master():
 		var direction: = get_direction()
@@ -15,12 +15,13 @@ func _physics_process(_delta):
 	else:
 		position = player_pos
 		velocity = player_motion
-
-	velocity = move_and_slide(velocity, FLOOR_NORMAL)
+	if (movements_allowed):
+		velocity = move_and_slide(velocity, FLOOR_NORMAL)
 
 	if not is_network_master():
 		player_pos = position # To avoid jitter
-		
+	
+
 # Calculates the movement/fall speed
 func calculate_move_velocity(
 		linear_velocity: Vector2,
@@ -57,10 +58,19 @@ func _on_Area2D_area_exited(area):
 	$Label.hide()
 
 func _ready():
+	add_to_group("players")
 	player_pos = position
 	if is_network_master():
-		$Camera2D.current = true
-		
+		$CameraWorld.current = true
+
+func set_camera():
+	$CameraWorld.make_current()
+
+func enable_movement():
+	movements_allowed = true
+
+func disable_movement():
+	movements_allowed = false
 
 func get_class():
 	return "Player"
