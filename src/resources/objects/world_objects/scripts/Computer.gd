@@ -8,6 +8,7 @@ func _physics_process(delta):
 		if (body.get_class() == "Player" and body.is_network_master() and Input.is_action_just_pressed("enter_computer")):
 			if $Desktop.is_visible_in_tree():
 				$Desktop.hide()
+				body.set_camera()
 				body.enable_movement()
 				var players = get_tree().get_nodes_in_group("players")
 				for player in players:
