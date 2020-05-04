@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/resources/fonts/montserrat_24.tres" type="DynamicFont" id=1]
+
+[node name="EventHeader" type="HBoxContainer"]
+margin_right = 518.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Event" type="Label" parent="."]
+margin_right = 496.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Events"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Point" type="Label" parent="."]
+margin_left = 500.0
+margin_right = 518.0
+margin_bottom = 31.0
+custom_fonts/font = ExtResource( 1 )
+text = "P"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
