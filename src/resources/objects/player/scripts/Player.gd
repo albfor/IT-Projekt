@@ -15,7 +15,8 @@ func _physics_process(_delta):
 	else:
 		position = player_pos
 		velocity = player_motion
-	if (movements_allowed):
+	
+	if movements_allowed:
 		velocity = move_and_slide(velocity, FLOOR_NORMAL)
 
 	if not is_network_master():
@@ -71,6 +72,3 @@ func enable_movement():
 
 func disable_movement():
 	movements_allowed = false
-
-func get_class():
-	return "Player"
