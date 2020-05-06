@@ -1,12 +1,12 @@
 extends Node
 
 func _ready():
-	$GameOverMenu.hide()
+	$GUIGameOver.hide()
 	pause_mode = Node.PAUSE_MODE_PROCESS
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		$GameOverMenu.visible = !$GameOverMenu.visible
+		$GUIGameOver.visible = !$GUIGameOver.visible
 		get_tree().paused = !get_tree().paused
 		
 

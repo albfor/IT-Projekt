@@ -11,8 +11,9 @@ __meta__ = {
 }
 
 [node name="Event" type="Label" parent="."]
+margin_top = 34.0
 margin_right = 496.0
-margin_bottom = 31.0
+margin_bottom = 65.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 1 )
 text = "Events"
@@ -22,8 +23,9 @@ __meta__ = {
 
 [node name="Point" type="Label" parent="."]
 margin_left = 500.0
+margin_top = 34.0
 margin_right = 518.0
-margin_bottom = 31.0
+margin_bottom = 65.0
 custom_fonts/font = ExtResource( 1 )
 text = "P"
 align = 2
