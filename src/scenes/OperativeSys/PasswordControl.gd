@@ -1,5 +1,10 @@
 extends Control
 
+func _ready():
+	$AcceptDialog.get_ok().set_text("Byt lösenord")
+	$ProjectWindow.get_ok().set_text("Skicka")
+	
+
 func _on_PasswordIcon_pressed():
 	var mouse_pos = get_global_mouse_position()
 	$AcceptDialog.popup()
