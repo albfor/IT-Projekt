@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/resources/images/OS BLUE TEAM/projekt icon.png" type="Texture" id=1]
+[ext_resource path="res://src/resources/images/OS BLUE TEAM/lösenord icon.png" type="Texture" id=2]
+[ext_resource path="res://src/resources/images/OS BLUE TEAM/OS.png" type="Texture" id=3]
+[ext_resource path="res://src/scenes/OperativeSys/PasswordControl.gd" type="Script" id=4]
+
+[node name="os" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 640, 360 )
+scale = Vector2( 0.67, 0.67 )
+texture = ExtResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 640, 360 )
+
+[node name="Control" type="Control" parent="Camera2D"]
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AcceptDialog" type="AcceptDialog" parent="Camera2D/Control"]
+margin_right = 600.0
+margin_bottom = 400.0
+window_title = "Lösenordsändraren"
+dialog_text = "Vill du byta lösenord?
+
+Kostar: 0
+
+Tid: 2 min"
+
+[node name="ProjectWindow" type="WindowDialog" parent="Camera2D/Control"]
+margin_right = 400.0
+margin_bottom = 400.0
+window_title = "Projekt"
+
+[node name="ProjectIcon" type="ToolButton" parent="Camera2D/Control"]
+margin_left = -631.972
+margin_top = -350.709
+margin_right = -531.972
+margin_bottom = -217.709
+rect_scale = Vector2( 0.67, 0.67 )
+icon = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PasswordIcon" type="ToolButton" parent="Camera2D/Control"]
+margin_left = -631.847
+margin_top = -235.499
+margin_right = -531.847
+margin_bottom = -118.498
+rect_scale = Vector2( 0.67, 0.67 )
+icon = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Camera2D/Control/ProjectIcon" to="Camera2D/Control" method="_on_ProjectIcon_pressed"]
+[connection signal="pressed" from="Camera2D/Control/PasswordIcon" to="Camera2D/Control" method="_on_PasswordIcon_pressed"]
