@@ -141,7 +141,13 @@ __meta__ = {
 
 [node name="EventHeader" parent="GUIGameOver/GameOverMenu/Body/EventsRed/ColorRect/EventContainerRed" instance=ExtResource( 5 )]
 
-[node name="EndGameButton" parent="GUIGameOver/GameOverMenu" instance=ExtResource( 6 )]
+[node name="Button" type="HBoxContainer" parent="GUIGameOver/GameOverMenu"]
 margin_top = 500.0
+margin_right = 1040.0
 margin_bottom = 560.0
-[connection signal="pressed" from="GUIGameOver/GameOverMenu/EndGameButton" to="." method="_on_EndGameButton_pressed"]
+alignment = 1
+
+[node name="EndGameButton" parent="GUIGameOver/GameOverMenu/Button" instance=ExtResource( 6 )]
+margin_left = 340.0
+margin_right = 700.0
+size_flags_horizontal = 0
