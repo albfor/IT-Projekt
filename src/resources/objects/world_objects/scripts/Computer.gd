@@ -28,7 +28,6 @@ func _physics_process(delta):
 					computer.get_node("Sprite").hide()
 
 func _ready():
-	print("computer " + str(position))
 	add_to_group("computers")
 	# Decides which img will be used as the texture
 	var pc1 = preload("res://src/resources/images/Desk 1.png")

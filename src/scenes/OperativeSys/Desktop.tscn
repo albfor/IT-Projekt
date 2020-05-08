@@ -8,7 +8,7 @@
 [ext_resource path="res://src/resources/images/icon.png" type="Texture" id=6]
 [ext_resource path="res://src/resources/images/OS BLUE TEAM/ruta till bakrunden.png" type="Texture" id=7]
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 1.0
 content_margin_right = 1.0
 content_margin_top = 1.0
@@ -24,7 +24,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.00784314, 0.709804, 0.0588235, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -36,7 +36,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.0196078, 0.513726, 0.168627, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -48,7 +48,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="Theme" id=3]
+[sub_resource type="Theme" id=4]
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -57,9 +57,9 @@ Button/constants/hseparation = 2
 Button/fonts/font = null
 Button/styles/disabled = null
 Button/styles/focus = null
-Button/styles/hover = SubResource( 4 )
-Button/styles/normal = SubResource( 1 )
-Button/styles/pressed = SubResource( 2 )
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 2 )
+Button/styles/pressed = SubResource( 3 )
 
 [node name="os" type="Node2D"]
 
@@ -184,7 +184,7 @@ margin_left = 208.616
 margin_top = 227.404
 margin_right = 288.616
 margin_bottom = 253.404
-theme = SubResource( 3 )
+theme = SubResource( 4 )
 text = "Skicka"
 __meta__ = {
 "_edit_use_anchors_": false
