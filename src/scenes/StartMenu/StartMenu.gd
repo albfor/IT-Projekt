@@ -7,6 +7,7 @@ func _ready():
 # On click show available roles
 # TODO: Set player to blue team
 func _on_blue_team_button_up():
+	$red_team.set_disabled(true)
 	$blue_team.hide()
 	$BlueSelect.hide()
 	$RedSelect.hide()
