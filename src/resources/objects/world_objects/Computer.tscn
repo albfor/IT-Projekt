@@ -22,14 +22,14 @@ texture = ExtResource( 1 )
 visible = false
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 1.101
 
 [node name="TimerDisplay" type="Label" parent="."]
-margin_left = -28.6319
-margin_top = -79.6106
-margin_right = 11.3681
-margin_bottom = -65.6106
+margin_left = -60.0571
+margin_top = -75.4206
+margin_right = 60.0
+margin_bottom = -61.4206
 text = "Cool Down"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
