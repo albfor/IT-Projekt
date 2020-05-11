@@ -17,9 +17,14 @@ func _on_blue_team_button_up():
 # TODO: Set player to redteam
 func _on_red_team_button_up():
 	queue_free()
+	start_game()
 
 # Print selected role into console and deletes scene
 # TODO: Set player to role
 func _on_ItemList_item_selected(index):
 	print('Role ' + $RoleSelection/ItemList.get_item_text(index) + ' selected.')
 	queue_free()
+	start_game()
+
+func start_game():
+	Network.begin_game()
