@@ -1,33 +1,30 @@
 extends Area2D
 
+onready var currently_on
+
+func _process(delta):
+	# Updates the TimeDisplay
+	if $TimerDisplay.is_visible_in_tree():
+		$TimerDisplay.set_text(str(int($Timer.get_time_left() + 1)))
+	
 
 func _physics_process(delta):
 	# Entering and exiting computers 
-	var bodies = get_overlapping_bodies()
-	for body in bodies:
-		if (body.is_in_group("players") and body.is_network_master() and Input.is_action_just_pressed("enter_computer")):
-			if $Desktop.is_visible_in_tree():
-				$Desktop.hide()
-				body.set_camera()
-				body.enable_movement()
-				var players = get_tree().get_nodes_in_group("players")
-				for player in players:
-					player.show()
-				var computers = get_tree().get_nodes_in_group("computers")
-				for computer in computers: 
-					computer.get_node("Sprite").show()
-			else:
-				$Desktop.show()
-				$Desktop/Camera2D.make_current()
-				body.disable_movement()
-				var players = get_tree().get_nodes_in_group("players")
-				for player in players:
-					player.hide()
-				var computers = get_tree().get_nodes_in_group("computers")
-				for computer in computers: 
-					computer.get_node("Sprite").hide()
+	if currently_on == null:
+		var bodies = get_overlapping_bodies()
+		for body in bodies:
+			if (body.is_in_group("players") and body.is_network_master() and Input.is_action_just_pressed("enter_computer")):
+				if currently_on == null:
+					currently_on = body
+					enter_computer()
+				else:
+					exit_computer()
+					currently_on = null
 
 func _ready():
+	$TimerDisplay.hide()
+	$Timer.set_one_shot(true) 
+	currently_on = null
 	add_to_group("computers")
 	# Decides which img will be used as the texture
 	var pc1 = preload("res://src/resources/images/Desk 1.png")
@@ -39,4 +36,48 @@ func _ready():
 		$Sprite.set_texture(pc1)
 	else:
 		$Sprite.set_texture(pc2)
-	
+
+func enter_computer():
+	$Desktop.show()
+	$Desktop/Camera2D.make_current()
+	currently_on.disable_movement()
+	var players = get_tree().get_nodes_in_group("players")
+	for player in players:
+		player.hide()
+	var computers = get_tree().get_nodes_in_group("computers")
+	for computer in computers: 
+		computer.get_node("Sprite").hide()
+		
+
+func exit_computer():
+	$Desktop.hide()
+	currently_on.set_camera()
+	currently_on.enable_movement()
+	var players = get_tree().get_nodes_in_group("players")
+	for player in players:
+		player.show()
+	var computers = get_tree().get_nodes_in_group("computers")
+	for computer in computers: 
+		computer.get_node("Sprite").show()
+
+func _on_Desktop_password_changed():
+	print("Password Change Started")
+	$TimerDisplay.show()
+	$Timer.start(5)
+	exit_computer()
+
+func _on_PasswordTimer_timeout():
+	print("Password Change Finished")
+	$TimerDisplay.hide()
+	currently_on = null
+
+func _on_ProjectTimer_timeout():
+	print("Project Finished")
+	$TimerDisplay.hide()
+	currently_on = null
+
+func _on_Desktop_project_started():
+	print("Project Started")
+	$TimerDisplay.show()
+	$Timer.start(5)
+	exit_computer()

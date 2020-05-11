@@ -20,3 +20,19 @@ texture = ExtResource( 1 )
 
 [node name="Desktop" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.101
+
+[node name="TimerDisplay" type="Label" parent="."]
+margin_left = -28.6319
+margin_top = -79.6106
+margin_right = 11.3681
+margin_bottom = -65.6106
+text = "Cool Down"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="password_changed" from="Desktop" to="." method="_on_Desktop_password_changed"]
+[connection signal="project_started" from="Desktop" to="." method="_on_Desktop_project_started"]
+[connection signal="timeout" from="Timer" to="." method="_on_PasswordTimer_timeout"]
