@@ -82,7 +82,7 @@ func refresh_lobby():
 	var players = Network.get_player_list()
 	players.sort()
 	$Lobby/PlayerList.clear()
-	$Lobby/PlayerList.add_item(Network.get_player_name() + " (You)")
+	$Lobby/PlayerList.add_item(Network.get_player_name() + " (you)")
 	for p in players:
 		$Lobby/PlayerList.add_item(p)
 
