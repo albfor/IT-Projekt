@@ -4,7 +4,6 @@ extends Control
 func _ready():
 	# Ensure menus are hidden at s
 	$Lobby.hide()
-	$StartMenu.hide()
 	# Called every time the node is added to the scene.
 	Network.connect("connection_failed", self, "_on_connection_failed")
 	Network.connect("connection_succeeded", self, "_on_connection_success")
@@ -91,4 +90,4 @@ func refresh_lobby():
 
 
 func _on_StartGameButton_pressed():
-	$StartMenu.show()
+	Network.start_menu()

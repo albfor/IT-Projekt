@@ -8,8 +8,6 @@ const MAX_PLAYERS = 5
 
 # Default name for player
 var player_name = "Player 1"
-# Player teams set to "blue" or "red", st. blue
-var player_team = "blue"
 
 # Names for remote players in id:name format.
 var players = {}
@@ -25,7 +23,7 @@ signal game_error(what)
 # Callback from SceneTree.
 func _player_connected(id):
 	# Registration of a client beings here, tell the connected player that we are here.
-	rpc_id(id, "register_player", player_name, player_team)
+	rpc_id(id, "register_player", player_name)
 
 
 # Callback from SceneTree.
@@ -59,11 +57,10 @@ func _connected_fail():
 
 # Lobby management functions.
 
-remote func register_player(new_player_name, new_team):
+remote func register_player(new_player_name):
 	var id = get_tree().get_rpc_sender_id()
 	print(id)
 	players[id] = new_player_name
-	player_team[id] = new_team
 	emit_signal("player_list_changed")
 
 
@@ -74,11 +71,10 @@ func unregister_player(id):
 remote func pre_start_game(spawn_points):
 	# Change scene.
 	var world = load("res://src/scenes/Level.tscn").instance()
-	
-	get_tree().get_root().add_child(world)
-	get_tree().get_root().get_node("Main").hide()
 
-	#Pre-load player object
+	get_tree().get_root().add_child(world)
+	get_tree().get_root().get_node("StartMenu").hide()
+
 	var player_scene = preload("res://src/resources/objects/player/Player.tscn")
 
 	for p_id in spawn_points:
@@ -108,6 +104,7 @@ remote func pre_start_game(spawn_points):
 remote func post_start_game():
 	get_tree().set_pause(false) # Unpause and unleash the game!
 
+	
 
 remote func ready_to_start(id):
 	assert(get_tree().is_network_server())
@@ -142,8 +139,20 @@ func get_player_list():
 func get_player_name():
 	return player_name
 
-func get_player_team():
-	return player_team
+
+# Functionality for the startmenu in the network
+func start_menu():
+	assert(get_tree().is_network_server())
+	
+	for p in players:
+		rpc_id(p, "load_start_menu")
+	load_start_menu()
+
+
+remote func load_start_menu():
+	var StartMenu = load("res://src/scenes/StartMenu/StartMenu.tscn").instance()
+	get_tree().get_root().add_child(StartMenu)
+	get_tree().get_root().get_node("Main").hide()
 
 
 func begin_game():
@@ -156,7 +165,6 @@ func begin_game():
 	for p in players:
 		spawn_points[p] = spawn_point_idx
 		spawn_point_idx += 1
-
 	# Call to pre-start game with the spawn points.
 	for p in players:
 		rpc_id(p, "pre_start_game", spawn_points)

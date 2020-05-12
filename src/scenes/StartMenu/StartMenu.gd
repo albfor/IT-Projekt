@@ -1,5 +1,7 @@
 extends Node2D
 
+var players_ready = []
+
 # Hides the role selection in the beginning
 func _ready():
 	$RoleSelection.hide()
@@ -17,14 +19,14 @@ func _on_blue_team_button_up():
 # TODO: Set player to redteam
 func _on_red_team_button_up():
 	queue_free()
-	start_game()
+	start_game("red")
 
 # Print selected role into console and deletes scene
 # TODO: Set player to role
 func _on_ItemList_item_selected(index):
 	print('Role ' + $RoleSelection/ItemList.get_item_text(index) + ' selected.')
 	queue_free()
-	start_game()
+	start_game("blue")
 
-func start_game():
+func start_game(team_side):
 	Network.begin_game()

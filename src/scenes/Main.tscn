@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/resources/images/Demo_logo.png" type="Texture" id=1]
 [ext_resource path="res://src/resources/objects/buttons/OptionsButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/resources/objects/buttons/HostGameButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/scenes/StartMenu/StartMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/resources/fonts/montserrat_24.tres" type="DynamicFont" id=5]
 [ext_resource path="res://src/resources/objects/buttons/JoinGameButton.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/scripts/Main.gd" type="Script" id=7]
@@ -151,9 +150,6 @@ size_flags_vertical = 3
 [node name="StartGameButton" parent="Lobby" instance=ExtResource( 8 )]
 margin_top = 500.0
 margin_bottom = 560.0
-
-[node name="StartMenu" parent="." instance=ExtResource( 4 )]
-visible = false
 
 [node name="ErrorDialog" type="AcceptDialog" parent="."]
 margin_right = 83.0
