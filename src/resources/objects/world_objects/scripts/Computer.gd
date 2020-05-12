@@ -5,7 +5,7 @@ onready var currently_on
 func _process(delta):
 	# Updates the TimeDisplay
 	if $TimerDisplay.is_visible_in_tree():
-		$TimerDisplay.set_text(str(int($Timer.get_time_left() + 1)))
+		$TimerDisplay/TimerTimeLeft.set_text(str(int($Timer.get_time_left() + 1)))
 	
 
 func _physics_process(delta):
@@ -66,18 +66,15 @@ func _on_Desktop_password_changed():
 	$Timer.start(5)
 	exit_computer()
 
-func _on_PasswordTimer_timeout():
-	print("Password Change Finished")
-	$TimerDisplay.hide()
-	currently_on = null
-
-func _on_ProjectTimer_timeout():
-	print("Project Finished")
-	$TimerDisplay.hide()
-	currently_on = null
 
 func _on_Desktop_project_started():
 	print("Project Started")
 	$TimerDisplay.show()
 	$Timer.start(5)
 	exit_computer()
+
+
+func _on_Timer_timeout():
+	print("Project Finished")
+	$TimerDisplay.hide()
+	currently_on = null
