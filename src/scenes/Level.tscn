@@ -96,16 +96,26 @@ position = Vector2( 1161.66, 262.327 )
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="SpawnPoints" type="Node2D" parent="."]
+[node name="SpawnPoints_red" type="Node2D" parent="."]
 
-[node name="0" type="Position2D" parent="SpawnPoints"]
+[node name="0" type="Position2D" parent="SpawnPoints_red"]
+
+[node name="1" type="Position2D" parent="SpawnPoints_red"]
+
+[node name="2" type="Position2D" parent="SpawnPoints_red"]
+
+[node name="3" type="Position2D" parent="SpawnPoints_red"]
+
+[node name="SpawnPoints_blue" type="Node2D" parent="."]
+
+[node name="0" type="Position2D" parent="SpawnPoints_blue"]
 position = Vector2( 177.541, 324.461 )
 
-[node name="1" type="Position2D" parent="SpawnPoints"]
+[node name="1" type="Position2D" parent="SpawnPoints_blue"]
 position = Vector2( 293.173, 339.426 )
 
-[node name="2" type="Position2D" parent="SpawnPoints"]
+[node name="2" type="Position2D" parent="SpawnPoints_blue"]
 position = Vector2( 525.797, 353.029 )
 
-[node name="3" type="Position2D" parent="SpawnPoints"]
+[node name="3" type="Position2D" parent="SpawnPoints_blue"]
 position = Vector2( 429.21, 348.948 )

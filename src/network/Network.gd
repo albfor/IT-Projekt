@@ -8,6 +8,11 @@ const MAX_PLAYERS = 5
 
 # Default name for player
 var player_name = "Player 1"
+var player_team = "blue"
+
+# Teams with team members
+var players_red = []
+var players_blue = []
 
 # Names for remote players in id:name format.
 var players = {}
@@ -59,7 +64,6 @@ func _connected_fail():
 
 remote func register_player(new_player_name):
 	var id = get_tree().get_rpc_sender_id()
-	print(id)
 	players[id] = new_player_name
 	emit_signal("player_list_changed")
 
@@ -68,33 +72,40 @@ func unregister_player(id):
 	players.erase(id)
 	emit_signal("player_list_changed")
 
-remote func pre_start_game(spawn_points):
+remote func pre_start_game(spawn_points_blue, spawn_points_red):
 	# Change scene.
 	var world = load("res://src/scenes/Level.tscn").instance()
-	var start_menu = load("res://src/scenes/StartMenu/StartMenu.tscn").instance()
-	
+
 	get_tree().get_root().add_child(world)
-	get_tree().get_root().add_child(start_menu)
-	get_tree().get_root().get_node("Main").hide()
+	get_tree().get_root().get_node("StartMenu").hide()
 
-	var player_scene = preload("res://src/resources/objects/player/Player.tscn")
+	var player_scene_blue = preload("res://src/resources/objects/player/Player.tscn")
+	var player_scene_red = preload("res://src/resources/objects/player/PlayerRed.tscn")
+	
+	for p_id in spawn_points_red:
+		var spawn_pos = world.get_node("SpawnPoints_red/" + str(spawn_points_red[p_id])).position
+		var player_red = player_scene_red.instance()
+		
+		player_red.set_name(str(p_id)) # Use unique ID as node name.
+		player_red.position = spawn_pos
+		player_red.set_network_master(p_id) #set unique id as master.
 
-	for p_id in spawn_points:
-		var spawn_pos = world.get_node("SpawnPoints/" + str(spawn_points[p_id])).position
-		var player = player_scene.instance()
+	for p_id in spawn_points_blue:
+		var spawn_pos = world.get_node("SpawnPoints_blue/" + str(spawn_points_blue[p_id])).position
+		var player_blue = player_scene_blue.instance()
 
-		player.set_name(str(p_id)) # Use unique ID as node name.
-		player.position=spawn_pos
-		player.set_network_master(p_id) #set unique id as master.
-
+		player_blue.set_name(str(p_id)) # Use unique ID as node name.
+		player_blue.position = spawn_pos
+		player_blue.set_network_master(p_id) #set unique id as master.
+		
 		if p_id == get_tree().get_network_unique_id():
 			# If node for this peer id, set name.
-			player.set_player_name(player_name)
+			player_blue.set_player_name(player_name)
 		else:
 			# Otherwise set name from peer.
-			player.set_player_name(players[p_id])
+			player_blue.set_player_name(players[p_id])
 
-		world.get_node("Players").add_child(player)
+		world.get_node("Players").add_child(player_blue)
 
 	if not get_tree().is_network_server():
 		# Tell server we are ready to start.
@@ -124,6 +135,7 @@ func host_game(new_player_name):
 	var host = NetworkedMultiplayerENet.new()
 	host.create_server(DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(host)
+	var id = get_tree().get_rpc_sender_id()
 
 
 func join_game(ip, new_player_name):
@@ -132,30 +144,65 @@ func join_game(ip, new_player_name):
 	client.create_client(ip, DEFAULT_PORT)
 	get_tree().set_network_peer(client)
 
+func all_ready():
+	
+	print(players_blue.size())
+	print(players_red.size())
+	print(players.size())
+	
+	if players_blue.size() + players_red.size() == players.size() + 1:
+		return true
+	return false
 
 func get_player_list():
 	return players.values()
 
+func get_players():
+	return players
 
 func get_player_name():
 	return player_name
 
+remote func set_players_blue(id):
+	players_blue.append(id)
+
+remote func set_players_red(id):
+	players_red.append(id)
+
+# Functionality for the startmenu in the network
+func start_menu():
+	assert(get_tree().is_network_server())
+	
+	for p in players:
+		rpc_id(p, "load_start_menu")
+	load_start_menu()
+
+
+remote func load_start_menu():
+	var StartMenu = load("res://src/scenes/StartMenu/StartMenu.tscn").instance()
+	get_tree().get_root().add_child(StartMenu)
+	get_tree().get_root().get_node("Main").hide()
+
 
 func begin_game():
 	assert(get_tree().is_network_server())
-
+	
 	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing.
-	var spawn_points = {}
-	spawn_points[1] = 0 # Server in spawn point 0.
-	var spawn_point_idx = 1
-	for p in players:
-		spawn_points[p] = spawn_point_idx
+	var spawn_points_blue = {}
+	var spawn_points_red = {}
+	
+	var spawn_point_idx = 0
+	for p in players_blue:
+		spawn_points_blue[p] = spawn_point_idx
+		spawn_point_idx += 1
+	for p in players_red:
+		spawn_points_red[p] = spawn_point_idx
 		spawn_point_idx += 1
 	# Call to pre-start game with the spawn points.
+	
 	for p in players:
-		rpc_id(p, "pre_start_game", spawn_points)
-
-	pre_start_game(spawn_points)
+		rpc_id(p, "pre_start_game", spawn_points_blue, spawn_points_red)
+	pre_start_game(spawn_points_blue, spawn_points_red)
 
 
 func end_game():

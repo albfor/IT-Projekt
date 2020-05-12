@@ -2,6 +2,8 @@
 extends Control
 
 func _ready():
+	# Ensure menus are hidden at s
+	$Lobby.hide()
 	# Called every time the node is added to the scene.
 	Network.connect("connection_failed", self, "_on_connection_failed")
 	Network.connect("connection_succeeded", self, "_on_connection_success")
@@ -80,7 +82,7 @@ func refresh_lobby():
 	var players = Network.get_player_list()
 	players.sort()
 	$Lobby/PlayerList.clear()
-	$Lobby/PlayerList.add_item(Network.get_player_name() + " (You)")
+	$Lobby/PlayerList.add_item(Network.get_player_name() + " (you)")
 	for p in players:
 		$Lobby/PlayerList.add_item(p)
 
@@ -88,4 +90,4 @@ func refresh_lobby():
 
 
 func _on_StartGameButton_pressed():
-	Network.begin_game()
+	Network.start_menu()
