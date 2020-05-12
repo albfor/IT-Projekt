@@ -8,7 +8,6 @@ const MAX_PLAYERS = 5
 
 # Default name for player
 var player_name = "Player 1"
-var player_team = "blue"
 
 # Teams with team members
 var players_red = []
@@ -145,11 +144,6 @@ func join_game(ip, new_player_name):
 	get_tree().set_network_peer(client)
 
 func all_ready():
-	
-	print(players_blue.size())
-	print(players_red.size())
-	print(players.size())
-	
 	if players_blue.size() + players_red.size() == players.size() + 1:
 		return true
 	return false

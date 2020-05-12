@@ -32,10 +32,6 @@ func start_game():
 	Network.begin_game()
 
 remotesync func add_teams(team_side):
-	
-	print(get_tree().get_network_unique_id())
-	print(get_tree().is_network_server())
-	
 	var id = get_tree().get_network_unique_id()
 	if not get_tree().is_network_server():
 		rpc_id(1, "add_to_team", team_side, id)
