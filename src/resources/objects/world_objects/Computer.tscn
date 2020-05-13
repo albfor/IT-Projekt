@@ -53,6 +53,7 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="input_event" from="." to="." method="_on_Area2D_input_event"]
 [connection signal="password_changed" from="Desktop" to="." method="_on_Desktop_password_changed"]
 [connection signal="project_started" from="Desktop" to="." method="_on_Desktop_project_started"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

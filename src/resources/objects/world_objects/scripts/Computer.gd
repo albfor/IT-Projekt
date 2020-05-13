@@ -1,6 +1,7 @@
 extends Area2D
 
 onready var currently_on
+signal computer_entered()
 
 func _process(delta):
 	# Updates the TimeDisplay
@@ -21,6 +22,7 @@ func _physics_process(delta):
 					currently_on = null
 
 func _ready():
+	
 	$TimerDisplay.hide()
 	$Timer.set_one_shot(true) 
 	currently_on = null
@@ -77,3 +79,8 @@ func _on_Timer_timeout():
 	print("Project Finished")
 	$TimerDisplay.hide()
 	currently_on = null
+
+
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if (event is InputEventMouseButton && event.pressed):
+		Network.red_attack_computer_selected(self)

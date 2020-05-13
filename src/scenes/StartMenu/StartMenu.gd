@@ -2,8 +2,6 @@ extends Node2D
 
 var players_ready = []
 
-signal player_added(team_side)
-
 # Hides the role selection in the beginning
 func _ready():
 	$RoleSelection.hide()

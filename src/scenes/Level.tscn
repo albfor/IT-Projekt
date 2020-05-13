@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/resources/images/BrownTile.png" type="Texture" id=1]
 [ext_resource path="res://src/resources/images/Block 1.png" type="Texture" id=2]
 [ext_resource path="res://src/resources/objects/world_objects/Computer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/scripts/Score.gd" type="Script" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -64,6 +65,7 @@ points = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 1/z_index = 0
 
 [node name="Level" type="Node"]
+script = ExtResource( 4 )
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( -2.4248, 85.6196 )

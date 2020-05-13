@@ -4,9 +4,6 @@ puppet var player_pos = Vector2()
 puppet var player_motion = Vector2()
 var movements_allowed = true;
 
-func attack_computer():
-	print ("this worked")
-
 func _physics_process(_delta):
 	#Needed for online
 	if is_network_master():
@@ -49,18 +46,12 @@ func get_direction() -> Vector2:
 		Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	)
 
-func _ready():
+func _ready():	
 	add_to_group("players")
 	player_pos = position
-	$RedGUI.connect("red_attack_1", self, "attack_computer")
-	$RedGUI.connect("red_attack_2", self, "attack_computer")
 	if is_network_master():
 		$CameraWorld.current = true
 		$RedGUI/CanvasLayer/ActionMenu.show()
 
 func set_camera():
 	$CameraWorld.make_current()
-
-func _on_Attack_1_pressed():
-	print("this worked") # Replace with function body.
-

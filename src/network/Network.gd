@@ -24,6 +24,10 @@ signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
 
+# actions made on the server
+signal attack_made(attack_type)
+signal computer_selected(id)
+
 # Callback from SceneTree.
 func _player_connected(id):
 	# Registration of a client beings here, tell the connected player that we are here.
@@ -208,6 +212,12 @@ func end_game():
 	emit_signal("game_ended")
 	players.clear()
 
+
+func red_attack(attack_type):
+	emit_signal("attack_made", attack_type)
+
+func red_attack_computer_selected(id):
+	emit_signal("computer_selected", id)
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
