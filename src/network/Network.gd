@@ -228,11 +228,14 @@ func computer_selected(id):
 	if players_red.has(get_tree().get_network_unique_id()):
 		emit_signal("computer_selected", id)
 
-# Handles all attacks
 func attack_timer(id, status):
-	rpc("_attack_timer", id, status)
-
-remotesync func _attack_timer(id, status):
+	assert(get_tree().is_network_server())
+	for p in players:
+		rpc_id(p ,"_attack_timer", id, status)
+	_attack_timer(id, status)
+	
+remote func _attack_timer(id, status):
+	
 	if (status == "start"):
 		emit_signal("attack_started", id)	
 	if (status == "finished"):

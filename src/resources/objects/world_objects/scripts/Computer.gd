@@ -23,8 +23,7 @@ func _physics_process(delta):
 					currently_on = null
 
 func _ready():
-	
-	Network.connect("attack_started", self, "start_attack_timer")
+	Network.connect("attack_started", self, "_start_attack_timer")
 	$TimerDisplay.hide()
 	$TimerDisplayRed.hide()
 	$TimerRed.set_one_shot(true)
@@ -91,12 +90,8 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		var id = self.get_instance_id()
 		Network.computer_selected(id)
 
-#Godot can't handle signals with rpc, this is the workaround
-func start_attack_timer(id):
-	rpc("_start_attack_timer", id)
 
-
-remotesync func _start_attack_timer(id):
+func _start_attack_timer(id):
 	if (id == self.get_instance_id()):
 		$TimerDisplayRed.show()
 		$TimerRed.start(5)

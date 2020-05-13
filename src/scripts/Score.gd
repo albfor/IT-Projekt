@@ -17,32 +17,17 @@ var red_score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Network.connect("attack_selected", self, "on_attack")
-	Network.connect("computer_selected", self, "computer_selected")
-	Network.connect("attack_finished", self, "attack_succesful")
+	Network.connect("attack_selected", self, "_on_attack")
+	Network.connect("computer_selected", self, "_computer_selected")
+	Network.connect("attack_finished", self, "_attack_succesful")
 
 
-
-# Godot can't handle signals with rpc, this is the workaround
-master func on_attack(attack_type):
-	rpc("_on_attack", attack_type)
-	_on_attack(attack_type)
-
-master func computer_selected(id):
-	rpc("_computer_selected", id)
-	_computer_selected(id)
-
-master func attack_succesful(id):
-	rpc("_attack_succesful", id)
-	_attack_succesful(id)
-
-
-puppet func _on_attack(attack_type):
+func _on_attack(attack_type):
 	attack_commenced = true
 	attack = attack_type
 
 # Don't allow other systems to attack same system att the same time
-puppet func _computer_selected(id):
+func _computer_selected(id):
 	# Can't use active computer
 	if not active_computers.has(id):
 		# If attack and computer selected attack it with selected attack
@@ -62,7 +47,7 @@ puppet func _computer_selected(id):
 		print("this computer is already in use")
 
 # Adds points if attack was succesful
-puppet func _attack_succesful(id):
+func _attack_succesful(id):
 	# Id to find the correct computer and how many times it has been attacked
 	var find_id = (computers[0].find(id))
 	active_computers.erase(id)
