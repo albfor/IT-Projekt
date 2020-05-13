@@ -208,6 +208,11 @@ func begin_game():
 		rpc_id(p, "pre_start_game", spawn_points_blue, spawn_points_red)
 	pre_start_game(spawn_points_blue, spawn_points_red)
 
+# Isn't working properly
+func end_score():
+	var GameOverMenu = load("res://src/resources/objects/Menus/GameOverMenu.tscn").instance()
+	
+	get_tree().get_root().add_child(GameOverMenu)
 
 func end_game():
 	if has_node("res://src/scenes/Level.tscn"): # Game is in progress.
@@ -237,7 +242,6 @@ remote func attack_timer(id, status):
 		emit_signal("attack_finished", id)
 	if(status == "unfinished"):
 		emit_signal("attack_unsuccesful", id)
-
 
 
 func _ready():

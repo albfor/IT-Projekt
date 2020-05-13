@@ -35,7 +35,7 @@ func _computer_selected(id):
 			# Adds the computer to attacked list
 			active_computers.append(id)
 			# Remove this below if testing
-			#attack_commenced = false
+			attack_commenced = false
 			
 			# If computer hasn't been attacked add it to the attack list
 			if not computers[0].has(id):
@@ -56,12 +56,13 @@ func _attack_succesful(id):
 	computers[1] = counter
 	if counter[find_id] >= 3:
 		red_score += 1
+		Network.add_event(attack)
 		# Add the attack timer
 		computers[0].erase(id)
 		computers[1].remove(find_id)
 		print("computer succesfully hacked")
+		print(red_score)
 		if red_score >= 10:
 			#Add score to scoreboard
-			print(red_score)
-			Network.end_game()
+			Network.end_score()
 	counter = 0

@@ -78,7 +78,7 @@ margin_top = 99.0
 margin_right = 417.0
 margin_bottom = 130.0
 custom_fonts/font = ExtResource( 2 )
-text = "0 - 0"
+text = "0 - 10"
 align = 1
 
 [node name="RedTeam" type="Label" parent="GUILayer/GUIGameOver/GameOverMenu/Header"]
