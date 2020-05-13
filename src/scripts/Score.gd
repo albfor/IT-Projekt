@@ -17,25 +17,26 @@ var red_score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Network.connect("attack_selected", self, "_on_attack")
+	Network.connect("attack_selected", self, "on_attack")
 	Network.connect("computer_selected", self, "computer_selected")
 	Network.connect("attack_finished", self, "attack_succesful")
 
 
-func _on_attack(attack_type):
-	attack_commenced = true
-	attack = attack_type
-
 
 # Godot can't handle signals with rpc, this is the workaround
+func on_attack(attack_type):
+	rpc("_on_attack", attack_type)
+
 func computer_selected(id):
 	rpc("_computer_selected", id)
-	
 
 func attack_succesful(id):
 	rpc("_attack_succesful", id)
 
 
+func _on_attack(attack_type):
+	attack_commenced = true
+	attack = attack_type
 
 # Don't allow other systems to attack same system att the same time
 remotesync func _computer_selected(id):
@@ -56,7 +57,6 @@ remotesync func _computer_selected(id):
 			Network.attack_timer(id, "start")
 	else:
 		print("this computer is already in use")
-
 
 # Adds points if attack was succesful
 remotesync func _attack_succesful(id):
