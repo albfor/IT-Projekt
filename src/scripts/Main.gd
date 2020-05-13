@@ -38,7 +38,8 @@ func _on_JoinGameButton_pressed():
 		return
 
 
-	var ip = $Menu/CenterRow/Buttons/HBoxContainer2/IP.text
+#	var ip = $Menu/CenterRow/Buttons/HBoxContainer2/IP.text
+	var ip = "192.168.1.5"
 	if not ip.is_valid_ip_address():
 		$Menu/CenterContainer/ErrorLabel.text = "Invalid IP address!"
 		return

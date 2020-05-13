@@ -155,6 +155,8 @@ margin_bottom = 560.0
 margin_right = 83.0
 margin_bottom = 58.0
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
 [node name="Node2D" type="Node2D" parent="."]
 [connection signal="pressed" from="Menu/CenterRow/Buttons/HBoxContainer/HostGameButton" to="." method="_on_HostGameButton_pressed"]
 [connection signal="pressed" from="Menu/CenterRow/Buttons/HBoxContainer2/JoinGameButton" to="." method="_on_JoinGameButton_pressed"]

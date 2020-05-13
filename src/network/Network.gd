@@ -24,6 +24,13 @@ signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
 
+# actions made on the server from red team
+signal attack_selected(attack_type)
+signal computer_selected(id)
+signal attack_started(id)
+signal attack_finished(id)
+signal attack_unsuccesful(id)
+
 # Callback from SceneTree.
 func _player_connected(id):
 	# Registration of a client beings here, tell the connected player that we are here.
@@ -88,7 +95,9 @@ remote func pre_start_game(spawn_points_blue, spawn_points_red):
 		player_red.set_name(str(p_id)) # Use unique ID as node name.
 		player_red.position = spawn_pos
 		player_red.set_network_master(p_id) #set unique id as master.
-
+		
+		world.get_node("Players").add_child(player_red)
+		
 	for p_id in spawn_points_blue:
 		var spawn_pos = world.get_node("SpawnPoints_blue/" + str(spawn_points_blue[p_id])).position
 		var player_blue = player_scene_blue.instance()
@@ -103,7 +112,6 @@ remote func pre_start_game(spawn_points_blue, spawn_points_red):
 		else:
 			# Otherwise set name from peer.
 			player_blue.set_player_name(players[p_id])
-
 		world.get_node("Players").add_child(player_blue)
 
 	if not get_tree().is_network_server():
@@ -158,10 +166,12 @@ func get_player_name():
 	return player_name
 
 remote func set_players_blue(id):
-	players_blue.append(id)
+	if not id in players_red and not id in players_blue:
+		players_blue.append(id)
 
 remote func set_players_red(id):
-	players_red.append(id)
+	if not id in players_red and not id in players_blue:
+		players_red.append(id)
 
 # Functionality for the startmenu in the network
 func start_menu():
@@ -198,6 +208,11 @@ func begin_game():
 		rpc_id(p, "pre_start_game", spawn_points_blue, spawn_points_red)
 	pre_start_game(spawn_points_blue, spawn_points_red)
 
+# Isn't working properly
+func end_score():
+	var GameOverMenu = load("res://src/resources/objects/Menus/GameOverMenu.tscn").instance()
+	
+	get_tree().get_root().add_child(GameOverMenu)
 
 func end_game():
 	if has_node("res://src/scenes/Level.tscn"): # Game is in progress.
@@ -206,6 +221,27 @@ func end_game():
 
 	emit_signal("game_ended")
 	players.clear()
+
+
+
+# Emit what attack the red player selected
+func red_attack_selected(attack_type):
+	emit_signal("attack_selected", attack_type)
+
+# Emit what computer red player selected
+func computer_selected(id):
+	if players_red.has(get_tree().get_network_unique_id()):
+		emit_signal("computer_selected", id)
+
+	
+remote func attack_timer(id, status):
+	
+	if (status == "start"):
+		emit_signal("attack_started", id)	
+	if (status == "finished"):
+		emit_signal("attack_finished", id)
+	if(status == "unfinished"):
+		emit_signal("attack_unsuccesful", id)
 
 
 func _ready():

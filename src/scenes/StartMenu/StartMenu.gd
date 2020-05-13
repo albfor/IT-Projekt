@@ -2,8 +2,6 @@ extends Node2D
 
 var players_ready = []
 
-signal player_added(team_side)
-
 # Hides the role selection in the beginning
 func _ready():
 	$RoleSelection.hide()
@@ -31,14 +29,14 @@ func _on_ItemList_item_selected(index):
 func start_game():
 	Network.begin_game()
 
-remotesync func add_teams(team_side):
+func add_teams(team_side):
 	var id = get_tree().get_network_unique_id()
 	if not get_tree().is_network_server():
 		rpc_id(1, "add_to_team", team_side, id)
 	else:
 		add_to_team(team_side, id)
 
-remotesync func add_to_team(team_side, id):
+remote func add_to_team(team_side, id):
 	if team_side == "blue":
 		Network.set_players_blue(id)
 	if team_side == "red":
