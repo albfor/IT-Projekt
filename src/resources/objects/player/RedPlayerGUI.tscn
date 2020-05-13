@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/resources/images/RedTeam Spelplan/redteamscreen.png" type="Texture" id=1]
+[ext_resource path="res://src/resources/fonts/montserrat_48.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/resources/objects/player/scripts/RedPlayerActions.gd" type="Script" id=3]
+
+[node name="RedGUI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ActionMenu" type="HBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 50.0
+rect_scale = Vector2( 0.3, 0.3 )
+rect_pivot_offset = Vector2( 1277.04, -4.59052 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ActionMenu"]
+margin_right = 1118.0
+margin_bottom = 710.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ActionMenu/VBoxContainer"]
+margin_right = 1118.0
+margin_bottom = 710.0
+rect_pivot_offset = Vector2( 1119.06, -2.32019 )
+texture = ExtResource( 1 )
+stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ActionMenu/VBoxContainer/TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 100.0
+margin_right = -61.0
+margin_bottom = -100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack_1" type="Button" parent="CanvasLayer/ActionMenu/VBoxContainer/TextureRect/VBoxContainer"]
+margin_right = 1007.0
+margin_bottom = 66.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "1. Knäck lösenord"
+flat = true
+align = 0
+
+[node name="Attack_2" type="Button" parent="CanvasLayer/ActionMenu/VBoxContainer/TextureRect/VBoxContainer"]
+margin_top = 70.0
+margin_right = 1007.0
+margin_bottom = 136.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 2 )
+text = "2. Skicka felaktig länk"
+flat = true
+align = 0
+[connection signal="pressed" from="CanvasLayer/ActionMenu/VBoxContainer/TextureRect/VBoxContainer/Attack_1" to="." method="_on_Attack_1_pressed"]
+[connection signal="pressed" from="CanvasLayer/ActionMenu/VBoxContainer/TextureRect/VBoxContainer/Attack_2" to="." method="_on_Attack_2_pressed"]
