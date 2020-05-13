@@ -1,8 +1,5 @@
 extends Control
 
-signal red_attack_1()
-signal red_attack_2()
-
 func _ready():
 	$CanvasLayer/ActionMenu.hide()
 
