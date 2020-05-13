@@ -29,7 +29,7 @@ func _on_ItemList_item_selected(index):
 func start_game():
 	Network.begin_game()
 
-remotesync func add_teams(team_side):
+func add_teams(team_side):
 	var id = get_tree().get_network_unique_id()
 	if not get_tree().is_network_server():
 		rpc_id(1, "add_to_team", team_side, id)

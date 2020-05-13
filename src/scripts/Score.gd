@@ -8,5 +8,5 @@ func _ready():
 func _on_attack(attack_type):
 	print(attack_type)
 
-func _computer_selected(id):
-	print (id)
+remote func _computer_selected(id):
+	print(id)

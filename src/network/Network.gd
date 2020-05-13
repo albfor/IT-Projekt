@@ -163,10 +163,12 @@ func get_player_name():
 	return player_name
 
 remote func set_players_blue(id):
-	players_blue.append(id)
+	if not id in players_red and not id in players_blue:
+		players_blue.append(id)
 
 remote func set_players_red(id):
-	players_red.append(id)
+	if not id in players_red and not id in players_blue:
+		players_red.append(id)
 
 # Functionality for the startmenu in the network
 func start_menu():
@@ -217,8 +219,10 @@ func red_attack(attack_type):
 	emit_signal("attack_made", attack_type)
 
 func red_attack_computer_selected(id):
-	emit_signal("computer_selected", id)
+	if players_red.has(get_tree().get_network_unique_id()):
+		pass
 
+	
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self,"_player_disconnected")
