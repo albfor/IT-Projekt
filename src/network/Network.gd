@@ -24,9 +24,12 @@ signal connection_succeeded()
 signal game_ended()
 signal game_error(what)
 
-# actions made on the server
+# actions made on the server from red team
 signal attack_selected(attack_type)
 signal computer_selected(id)
+signal attack_started(id)
+signal attack_finished(id)
+signal attack_unsuccesful(id)
 
 # Callback from SceneTree.
 func _player_connected(id):
@@ -214,6 +217,8 @@ func end_game():
 	emit_signal("game_ended")
 	players.clear()
 
+
+
 # Emit what attack the red player selected
 func red_attack_selected(attack_type):
 	emit_signal("attack_selected", attack_type)
@@ -223,7 +228,16 @@ func computer_selected(id):
 	if players_red.has(get_tree().get_network_unique_id()):
 		emit_signal("computer_selected", id)
 
-	
+func attack_timer(id, status):
+	if (status == "start"):
+		emit_signal("attack_started", id)	
+	if (status == "finished"):
+		emit_signal("attack_finished", id)
+	if(status == "unfinished"):
+		emit_signal("attack_unsuccesful", id)
+
+
+
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self,"_player_disconnected")

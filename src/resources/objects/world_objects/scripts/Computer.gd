@@ -7,7 +7,8 @@ func _process(delta):
 	# Updates the TimeDisplay
 	if $TimerDisplay.is_visible_in_tree():
 		$TimerDisplay/TimerTimeLeft.set_text(str(int($Timer.get_time_left() + 1)))
-	
+	if $TimerDisplayRed.is_visible_in_tree():
+		$TimerDisplayRed/TimerTimeLeft.set_text(str(int($TimerRed.get_time_left() + 1)))
 
 func _physics_process(delta):
 	if currently_on == null:
@@ -23,7 +24,10 @@ func _physics_process(delta):
 
 func _ready():
 	
+	Network.connect("attack_started", self, "start_attack_timer")
 	$TimerDisplay.hide()
+	$TimerDisplayRed.hide()
+	$TimerRed.set_one_shot(true)
 	$Timer.set_one_shot(true) 
 	currently_on = null
 	add_to_group("computers")
@@ -81,7 +85,19 @@ func _on_Timer_timeout():
 	currently_on = null
 
 
+# Sends the id of the computer if someone clicks on it
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton && event.pressed):
 		var id = self.get_instance_id()
 		Network.computer_selected(id)
+
+
+remote func start_attack_timer(id):
+	if (id == self.get_instance_id()):
+		$TimerDisplayRed.show()
+		$TimerRed.start(5)
+
+
+func _on_TimerRed_timeout():
+	$TimerDisplayRed.hide()
+	Network.attack_timer(self.get_instance_id(), "finished")

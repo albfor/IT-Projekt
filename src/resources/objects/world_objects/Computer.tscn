@@ -23,6 +23,8 @@ visible = false
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="TimerRed" type="Timer" parent="."]
+
 [node name="TimerDisplay" type="ColorRect" parent="."]
 margin_left = -56.0
 margin_top = -101.0
@@ -53,7 +55,39 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TimerDisplayRed" type="ColorRect" parent="."]
+margin_left = -56.0
+margin_top = -101.0
+margin_right = 57.0
+margin_bottom = -61.0
+color = Color( 0.972549, 0.196078, 0.0196078, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Occupied" type="Label" parent="TimerDisplayRed"]
+margin_left = 5.02127
+margin_top = 8.12095
+margin_right = 105.021
+margin_bottom = 22.1209
+text = "Dator Upptagen"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerTimeLeft" type="Label" parent="TimerDisplayRed"]
+margin_left = -4.0571
+margin_top = 25.5794
+margin_right = 116.0
+margin_bottom = 39.5794
+text = "Cool Down"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="input_event" from="." to="." method="_on_Area2D_input_event"]
 [connection signal="password_changed" from="Desktop" to="." method="_on_Desktop_password_changed"]
 [connection signal="project_started" from="Desktop" to="." method="_on_Desktop_project_started"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="TimerRed" to="." method="_on_TimerRed_timeout"]
