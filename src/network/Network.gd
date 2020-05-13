@@ -228,6 +228,7 @@ func computer_selected(id):
 	if players_red.has(get_tree().get_network_unique_id()):
 		emit_signal("computer_selected", id)
 
+# Handles all attacks
 func attack_timer(id, status):
 	if (status == "start"):
 		emit_signal("attack_started", id)	

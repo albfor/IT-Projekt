@@ -31,19 +31,16 @@ remote func _computer_selected(id):
 	if not active_computers.has(id):
 		# If attack and computer selected attack it with selected attack
 		if (attack_commenced && attack == "attack_1"):
+			# Adds the computer to attacked list
 			active_computers.append(id)
-			# Add this below back after testing
+			# Remove this below if testing
 			attack_commenced = false
 		
 			# If computer hasn't been attacked add it to the attack list
-			print(computers[0].has(id))
-			
 			if not computers[0].has(id):
 				computers[0].append(id)
 				computers[1].append(0)
-				print(computers)
 			#check to see if attack was succesful
-			print("player attacked computer: " + str(id) + " with " +  str(attack))
 			Network.attack_timer(id, "start")
 	else:
 		print("this computer is already in use")
@@ -54,11 +51,8 @@ remote func _attack_succesful(id):
 	var find_id = (computers[0].find(id))
 	active_computers.erase(id)
 	counter = computers[1]
-	print(counter[find_id])
 	counter[find_id] += 1
-	print(counter[find_id])
 	computers[1] = counter
-	print("player succesfully attacked computer: " + str(id) + " with " +  str(attack))
 	if counter[find_id] >= 3:
 		red_score += 1
 		# Add the attack timer
@@ -70,4 +64,3 @@ remote func _attack_succesful(id):
 			print(red_score)
 			Network.end_game()
 	counter = 0
-	print(computers[1])
