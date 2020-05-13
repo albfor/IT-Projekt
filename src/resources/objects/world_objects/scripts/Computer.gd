@@ -83,4 +83,5 @@ func _on_Timer_timeout():
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton && event.pressed):
-		Network.red_attack_computer_selected(self)
+		var id = self.get_instance_id()
+		Network.computer_selected(id)

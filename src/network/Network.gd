@@ -25,7 +25,7 @@ signal game_ended()
 signal game_error(what)
 
 # actions made on the server
-signal attack_made(attack_type)
+signal attack_selected(attack_type)
 signal computer_selected(id)
 
 # Callback from SceneTree.
@@ -214,13 +214,14 @@ func end_game():
 	emit_signal("game_ended")
 	players.clear()
 
+# Emit what attack the red player selected
+func red_attack_selected(attack_type):
+	emit_signal("attack_selected", attack_type)
 
-func red_attack(attack_type):
-	emit_signal("attack_made", attack_type)
-
-func red_attack_computer_selected(id):
+# Emit what computer red player selected
+func computer_selected(id):
 	if players_red.has(get_tree().get_network_unique_id()):
-		pass
+		emit_signal("computer_selected", id)
 
 	
 func _ready():
