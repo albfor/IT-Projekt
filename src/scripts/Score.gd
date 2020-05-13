@@ -56,7 +56,6 @@ func _attack_succesful(id):
 	computers[1] = counter
 	if counter[find_id] >= 3:
 		red_score += 1
-		Network.add_event(attack)
 		# Add the attack timer
 		computers[0].erase(id)
 		computers[1].remove(find_id)
