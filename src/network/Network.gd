@@ -88,7 +88,9 @@ remote func pre_start_game(spawn_points_blue, spawn_points_red):
 		player_red.set_name(str(p_id)) # Use unique ID as node name.
 		player_red.position = spawn_pos
 		player_red.set_network_master(p_id) #set unique id as master.
-
+		
+		world.get_node("Players").add_child(player_red)
+		
 	for p_id in spawn_points_blue:
 		var spawn_pos = world.get_node("SpawnPoints_blue/" + str(spawn_points_blue[p_id])).position
 		var player_blue = player_scene_blue.instance()
@@ -103,7 +105,6 @@ remote func pre_start_game(spawn_points_blue, spawn_points_red):
 		else:
 			# Otherwise set name from peer.
 			player_blue.set_player_name(players[p_id])
-
 		world.get_node("Players").add_child(player_blue)
 
 	if not get_tree().is_network_server():

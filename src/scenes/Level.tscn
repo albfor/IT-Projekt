@@ -99,12 +99,16 @@ position = Vector2( 1161.66, 262.327 )
 [node name="SpawnPoints_red" type="Node2D" parent="."]
 
 [node name="0" type="Position2D" parent="SpawnPoints_red"]
+position = Vector2( 328.232, 483.773 )
 
 [node name="1" type="Position2D" parent="SpawnPoints_red"]
+position = Vector2( 224.845, 489.625 )
 
 [node name="2" type="Position2D" parent="SpawnPoints_red"]
+position = Vector2( 412.112, 273.098 )
 
 [node name="3" type="Position2D" parent="SpawnPoints_red"]
+position = Vector2( 597.428, 243.837 )
 
 [node name="SpawnPoints_blue" type="Node2D" parent="."]
 
