@@ -24,22 +24,25 @@ func _ready():
 
 
 # Godot can't handle signals with rpc, this is the workaround
-func on_attack(attack_type):
+master func on_attack(attack_type):
 	rpc("_on_attack", attack_type)
+	_on_attack(attack_type)
 
-func computer_selected(id):
+master func computer_selected(id):
 	rpc("_computer_selected", id)
+	_computer_selected(id)
 
-func attack_succesful(id):
+master func attack_succesful(id):
 	rpc("_attack_succesful", id)
+	_attack_succesful(id)
 
 
-func _on_attack(attack_type):
+puppet func _on_attack(attack_type):
 	attack_commenced = true
 	attack = attack_type
 
 # Don't allow other systems to attack same system att the same time
-remotesync func _computer_selected(id):
+puppet func _computer_selected(id):
 	# Can't use active computer
 	if not active_computers.has(id):
 		# If attack and computer selected attack it with selected attack
@@ -59,7 +62,7 @@ remotesync func _computer_selected(id):
 		print("this computer is already in use")
 
 # Adds points if attack was succesful
-remotesync func _attack_succesful(id):
+puppet func _attack_succesful(id):
 	# Id to find the correct computer and how many times it has been attacked
 	var find_id = (computers[0].find(id))
 	active_computers.erase(id)

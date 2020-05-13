@@ -230,6 +230,9 @@ func computer_selected(id):
 
 # Handles all attacks
 func attack_timer(id, status):
+	rpc("_attack_timer", id, status)
+
+remotesync func _attack_timer(id, status):
 	if (status == "start"):
 		emit_signal("attack_started", id)	
 	if (status == "finished"):

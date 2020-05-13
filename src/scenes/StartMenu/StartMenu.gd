@@ -36,7 +36,7 @@ func add_teams(team_side):
 	else:
 		add_to_team(team_side, id)
 
-remotesync func add_to_team(team_side, id):
+remote func add_to_team(team_side, id):
 	if team_side == "blue":
 		Network.set_players_blue(id)
 	if team_side == "red":

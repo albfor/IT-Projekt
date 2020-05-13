@@ -97,8 +97,6 @@ func start_attack_timer(id):
 
 
 remotesync func _start_attack_timer(id):
-	print(self.get_instance_id())
-	print(id)
 	if (id == self.get_instance_id()):
 		$TimerDisplayRed.show()
 		$TimerRed.start(5)
