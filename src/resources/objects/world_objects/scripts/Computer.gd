@@ -91,8 +91,14 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		var id = self.get_instance_id()
 		Network.computer_selected(id)
 
+#Godot can't handle signals with rpc, this is the workaround
+func start_attack_timer(id):
+	for p in Network.get_players():
+		rpc_id(p, "_start_attack_timer", id)
+	_start_attack_timer(id)
 
-remote func start_attack_timer(id):
+
+remotesync func _start_attack_timer(id):
 	if (id == self.get_instance_id()):
 		$TimerDisplayRed.show()
 		$TimerRed.start(5)
