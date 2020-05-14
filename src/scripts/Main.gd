@@ -66,8 +66,8 @@ func _on_connection_failed():
 
 func _on_game_ended():
 	show()
-	$Menu.hide()
-	$Lobby.show()
+	get_tree().get_root().get_node("Main").hide()
+	get_tree().get_root().get_node("StartMenu").hide()
 	$Menu/CenterRow/Buttons/HBoxContainer/HostGameButton.disabled = false
 	$Menu/CenterRow/Buttons/HBoxContainer2/JoinGameButton.disabled = false
 

@@ -12,8 +12,9 @@ var computers = [[],[]]
 # To know which computer is used for attacks
 var active_computers = []
 
-# Red teams score
+# Teams score
 var red_score = 0
+var blue_score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,14 +55,18 @@ func _attack_succesful(id):
 	counter = computers[1]
 	counter[find_id] += 1
 	computers[1] = counter
-	if counter[find_id] >= 3:
+	if counter[find_id] >= 2:
 		red_score += 1
+		Network.add_event("Red team succesfully bruteforced a password", "red", 1)
 		# Add the attack timer
 		computers[0].erase(id)
 		computers[1].remove(find_id)
 		print("computer succesfully hacked")
 		print(red_score)
-		if red_score >= 10:
+		if red_score >= 5:
 			#Add score to scoreboard
-			Network.end_score()
+			end_score()
 	counter = 0
+
+func end_score():
+	Network.end_score(red_score, blue_score)
