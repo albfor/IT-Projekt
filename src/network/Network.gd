@@ -17,6 +17,9 @@ var players_blue = []
 var players = {}
 var players_ready = []
 
+# Keeps the events that happen during the game
+var events = [[],[],[]]
+
 # Signals to let lobby GUI know what's going on.
 signal player_list_changed()
 signal connection_failed()
@@ -209,21 +212,25 @@ func begin_game():
 	pre_start_game(spawn_points_blue, spawn_points_red)
 
 # Isn't working properly
-func end_score():
-	var GameOverMenu = load("res://src/resources/objects/Menus/GameOverMenu.tscn").instance()
-	
+func end_score(score_red, score_blue):
+	var GameOverMenu = preload("res://src/resources/objects/Menus/GameOverMenu.tscn").instance()
+	GameOverMenu.set_score(score_red, score_blue)
+	get_tree().paused = true
 	get_tree().get_root().add_child(GameOverMenu)
 
 func end_game():
 	if has_node("res://src/scenes/Level.tscn"): # Game is in progress.
 		# End it
 		get_node("res://src/scenes/Level.tscn").queue_free()
-
 	emit_signal("game_ended")
 	players.clear()
 
-
-
+# Needs event text and team (red or blue)
+func add_event(event, team, score):
+	events[0].append(event)
+	events[1].append(team)
+	events[2].append(score)
+	
 # Emit what attack the red player selected
 func red_attack_selected(attack_type):
 	emit_signal("attack_selected", attack_type)
