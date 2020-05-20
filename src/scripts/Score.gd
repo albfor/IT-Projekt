@@ -54,14 +54,14 @@ func _attack_succesful(id):
 	counter = computers[1]
 	counter[find_id] += 1
 	computers[1] = counter
-	if counter[find_id] >= 3:
+	if counter[find_id] >= 1:
 		red_score += 1
 		# Add the attack timer
 		computers[0].erase(id)
 		computers[1].remove(find_id)
 		print("computer succesfully hacked")
 		print(red_score)
-		if red_score >= 10:
+		if red_score >= 1:
 			#Add score to scoreboard
 			Network.end_score()
 	counter = 0
